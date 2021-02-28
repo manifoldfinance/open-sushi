@@ -1,3 +1,15 @@
+## [0.1.4](https://github.com/manifoldfinance/open-sushi/compare/v0.1.3...v0.1.4) (2021-02-28)
+
+
+### Chores
+
+* package update ([34ec109](https://github.com/manifoldfinance/open-sushi/commit/34ec109570996a5e8f04041e955821d7b82a83ea))
+
+
+### Miscellaneous
+
+* Merge branch 'master' of https://github.com/manifoldfinance/open-sushi ([eca877a](https://github.com/manifoldfinance/open-sushi/commit/eca877a1a61d5ece281a6d492ce35b83809deef6))
+
 ## [0.1.3](https://github.com/manifoldfinance/open-sushi/compare/v0.1.2...v0.1.3) (2021-02-28)
 
 
