@@ -377,10 +377,6 @@ components:
       properties:
         errorType:
           type: string
-          enum:
-            [
-                InvalidSignature,
-                InvalidOrderUid,
-            ]
+          enum: [InvalidSignature, InvalidOrderUid]
         description:
           type: string
