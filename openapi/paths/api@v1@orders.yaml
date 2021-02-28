@@ -1,23 +1,23 @@
 post:
   summary: Create a new order.
   responses:
-    '201':
+    "201":
       description: Order has been accepted.
       content:
         application/json:
           schema:
             $ref: ../components/schemas/UID.yaml
-    '400':
+    "400":
       description: Error during order validation
       content:
         application/json:
           schema:
             $ref: ../components/schemas/OrderPostError.yaml
-    '403':
-      description: 'Forbidden, your account is deny-listed'
-    '429':
+    "403":
+      description: "Forbidden, your account is deny-listed"
+    "429":
       description: Too many order placements
-    '500':
+    "500":
       description: Error adding an order
   requestBody:
     description: The order to create.
@@ -80,7 +80,7 @@ get:
       schema:
         type: integer
   responses:
-    '200':
+    "200":
       description: existing orders
       content:
         application/json:

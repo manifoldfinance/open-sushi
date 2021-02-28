@@ -15,7 +15,7 @@ get:
         $ref: ../components/schemas/UID.yaml
       required: false
   responses:
-    '200':
+    "200":
       description: all trades
       content:
         application/json:

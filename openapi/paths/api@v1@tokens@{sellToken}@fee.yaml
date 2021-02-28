@@ -13,11 +13,11 @@ get:
       schema:
         $ref: ../components/schemas/Address.yaml
   responses:
-    '200':
+    "200":
       description: the fee
       content:
         application/json:
           schema:
             $ref: ../components/schemas/FeeInformation.yaml
-    '404':
+    "404":
       description: sellToken not existent

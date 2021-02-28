@@ -6,7 +6,7 @@ properties:
   creationTime:
     description: Creation time of the order. Encoded as ISO 8601 UTC.
     type: string
-    example: '2020-12-03T18:35:18.814523Z'
+    example: "2020-12-03T18:35:18.814523Z"
   owner:
     $ref: ./Address.yaml
   UID:

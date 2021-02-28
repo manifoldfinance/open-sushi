@@ -24,7 +24,7 @@ properties:
       uint32 encoded
     type: integer
   feeAmount:
-    description: 'Fees: feeRatio * sellAmount + minimal_fee in atoms'
+    description: "Fees: feeRatio * sellAmount + minimal_fee in atoms"
     $ref: ./TokenAmount.yaml
   kind:
     description: The kind is either a buy or sell order
