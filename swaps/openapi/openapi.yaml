@@ -1,0 +1,30 @@
+openapi: 3.0.0
+info:
+  title: 1inch API
+  version: '2.0'
+paths:
+  /v2.0/approve/calldata:
+    $ref: paths/v2.0@approve@calldata.yaml
+  /v2.0/approve/spender:
+    $ref: paths/v2.0@approve@spender.yaml
+  /v2.0/healthcheck:
+    $ref: paths/v2.0@healthcheck.yaml
+  /v2.0/quote:
+    $ref: paths/v2.0@quote.yaml
+  /v2.0/swap:
+    $ref: paths/v2.0@swap.yaml
+  /v2.0/protocols:
+    $ref: paths/v2.0@protocols.yaml
+  /v2.0/protocols/images:
+    $ref: paths/v2.0@protocols@images.yaml
+  /v2.0/tokens:
+    $ref: paths/v2.0@tokens.yaml
+tags:
+  - name: Approve
+  - name: Healthcheck
+  - name: Quote/Swap
+  - name: Protocols
+  - name: Tokens
+servers:
+  - url: 'https://api.1inch.exchange'
+  - url: 'http://api.1inch.exchange'

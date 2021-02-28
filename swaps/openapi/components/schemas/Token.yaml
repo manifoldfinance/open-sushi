@@ -1,0 +1,19 @@
+type: object
+properties:
+  symbol:
+    type: string
+  name:
+    type: string
+  address:
+    type: string
+  decimals:
+    type: number
+  logoURI:
+    type: string
+required:
+  - symbol
+  - name
+  - address
+  - decimals
+  - logoURI
+description: Token

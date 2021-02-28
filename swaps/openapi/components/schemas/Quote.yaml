@@ -1,0 +1,28 @@
+type: object
+properties:
+  fromToken:
+    $ref: ./Token.yaml
+  toToken:
+    $ref: ./Token.yaml
+  toTokenAmount:
+    type: string
+    description: To token amount
+  fromTokenAmount:
+    type: string
+    description: From token amount
+  protocols:
+    type: array
+    description: From token amount
+    items:
+      $ref: ./SelectedProtocol.yaml
+  estimatedGas:
+    type: integer
+    description: Estimated Gas
+required:
+  - fromToken
+  - toToken
+  - toTokenAmount
+  - fromTokenAmount
+  - protocols
+  - estimatedGas
+description: Quote Response

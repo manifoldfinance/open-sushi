@@ -1,0 +1,22 @@
+type: object
+properties:
+  to:
+    type: string
+    description: Address of the token to approve
+    example:
+      - '0x6b175474e89094c44da98b954eedeac495271d0f'
+  value:
+    type: string
+    description: ETH value in wei (for approve is 0)
+  gasPrice:
+    type: string
+    description: Network fast gas price
+  data:
+    type: string
+    description: CallData to sign
+required:
+  - to
+  - value
+  - gasPrice
+  - data
+description: Approve CallData response

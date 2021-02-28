@@ -1,0 +1,14 @@
+get:
+  operationId: getSpenderAddress
+  tags:
+    - Approve
+  description: Address of spender
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/SpenderAddress.yaml
+    '500':
+      description: Internal Server Error

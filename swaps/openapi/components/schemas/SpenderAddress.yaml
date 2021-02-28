@@ -1,0 +1,8 @@
+type: object
+properties:
+  address:
+    type: string
+    description: We need to approve your token to this address
+required:
+  - address
+description: Spender address

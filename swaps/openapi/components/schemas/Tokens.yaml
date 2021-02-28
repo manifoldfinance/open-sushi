@@ -1,0 +1,7 @@
+type: object
+properties:
+  tokens:
+    $ref: ./Token.yaml
+required:
+  - tokens
+description: Supported tokens (you can also use not supported)

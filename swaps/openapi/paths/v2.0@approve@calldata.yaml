@@ -1,0 +1,30 @@
+get:
+  operationId: getCallData
+  tags:
+    - Approve
+  description: Generated approve calldata
+  parameters:
+    - name: amount
+      in: query
+      required: false
+      schema:
+        type: integer
+    - name: infinity
+      in: query
+      required: false
+      schema:
+        type: boolean
+    - name: tokenAddress
+      in: query
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ApproveCallData.yaml
+    '500':
+      description: Internal Server Error

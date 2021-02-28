@@ -1,0 +1,10 @@
+type: object
+properties:
+  protocols:
+    type: array
+    description: Supported protocols to pass to protocols
+    items:
+      type: string
+required:
+  - protocols
+description: Supported Protocols

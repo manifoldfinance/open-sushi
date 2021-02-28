@@ -1,0 +1,10 @@
+type: object
+properties:
+  protocols:
+    type: array
+    description: Protocols images
+    items:
+      type: object
+required:
+  - protocols
+description: Protocols images

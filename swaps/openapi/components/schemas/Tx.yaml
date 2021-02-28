@@ -1,0 +1,22 @@
+type: object
+properties:
+  from:
+    type: string
+  to:
+    type: string
+  data:
+    type: string
+  value:
+    type: string
+  gasPrice:
+    type: string
+  gas:
+    type: number
+required:
+  - from
+  - to
+  - data
+  - value
+  - gasPrice
+  - gas
+description: Ethereum transaction

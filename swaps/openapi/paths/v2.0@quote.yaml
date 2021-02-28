@@ -1,0 +1,106 @@
+get:
+  operationId: getQuote
+  tags:
+    - Quote/Swap
+  description: Quote
+  parameters:
+    - name: fromTokenAddress
+      in: query
+      required: true
+      schema:
+        type: string
+    - name: toTokenAddress
+      in: query
+      required: true
+      schema:
+        type: string
+    - name: amount
+      in: query
+      required: true
+      schema:
+        type: integer
+    - name: fee
+      in: query
+      description: 'min: 0; max: 3; default: 0;  !should be the same for quote and swap!'
+      required: false
+      schema:
+        type: number
+        minimum: 0
+        maximum: 3
+    - name: protocols
+      in: query
+      description: 'default: all'
+      required: false
+      schema:
+        type: string
+    - name: gasPrice
+      in: query
+      description: 'default: fast from network'
+      required: false
+      schema:
+        type: string
+    - name: complexityLevel
+      in: query
+      description: 'min: 0; max: 3; default: 2; !should be the same for quote and swap!'
+      required: false
+      schema:
+        type: string
+        minimum: 0
+        maximum: 3
+    - name: connectorTokens
+      in: query
+      description: >-
+        max: 5; example:
+        0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE,0x6b175474e89094c44da98b954eedeac495271d0f; 
+        !should be the same for quote and swap!
+      required: false
+      allowEmptyValue: true
+      schema:
+        type: string
+    - name: gasLimit
+      in: query
+      description: >-
+        max amount of gas of path costs. default: 11500000; max: 11500000;
+        !should be the same for quote and swap!
+      required: false
+      schema:
+        type: integer
+        minimum: 100000
+        maximum: 11500000
+    - name: parts
+      in: query
+      description: >-
+        split parts. default: 20; max: 100;  !should be the same for quote and
+        swap!
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 100
+    - name: virtualParts
+      in: query
+      description: >-
+        split parts. default: 20; max: 100;  should be >= parts !should be the
+        same for quote and swap!
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 100
+    - name: mainRouteParts
+      in: query
+      description: 'default: 10; max: 50;  !should be the same for quote and swap!'
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Quote.yaml
+    '500':
+      description: Internal Server Error

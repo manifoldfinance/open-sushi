@@ -1,0 +1,16 @@
+type: object
+properties:
+  name:
+    type: string
+  part:
+    type: number
+  fromTokenAddress:
+    type: string
+  toTokenAddress:
+    type: string
+required:
+  - name
+  - part
+  - fromTokenAddress
+  - toTokenAddress
+description: Selected Protocol Info
