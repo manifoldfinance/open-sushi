@@ -1,0 +1,386 @@
+openapi: 3.0.3
+info:
+  version: 0.0.1
+  title: Order Book API
+servers:
+  - url: https://testing.backbonecabal.xyz
+    description: SushiSwap Mainnet (Staging)
+  - url: http://localhost:8080
+    description: Local
+paths:
+  /api/v1/orders:
+    post:
+      summary: Create a new order.
+      responses:
+        201:
+          description: Order has been accepted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UID"
+        400:
+          description: Error during order validation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderPostError"
+        403:
+          description: Forbidden, your account is deny-listed
+        429:
+          description: Too many order placements
+        500:
+          description: Error adding an order
+      requestBody:
+        description: The order to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderCreation"
+    get:
+      summary: Get existing orders.
+      description: |
+        By default all currently valid orders are returned. The set of returned orders can be
+        reduced by setting owner, sell token, buy token filters. It can be increased by disabling
+        different order validity exclusion criteria.
+      parameters:
+        - name: owner
+          in: query
+          schema:
+            $ref: "#/components/schemas/Address"
+          required: false
+        - name: sellToken
+          in: query
+          schema:
+            $ref: "#/components/schemas/Address"
+          required: false
+        - name: buyToken
+          in: query
+          schema:
+            $ref: "#/components/schemas/Address"
+          required: false
+        - name: includeFullyExecuted
+          in: query
+          description: Should fully executed orders be returned?
+          schema:
+            type: boolean
+            default: false
+        - name: includeInvalidated
+          in: query
+          description: Should orders that have been invalidated in the smart contract be returned?
+          schema:
+            type: boolean
+            default: false
+        - name: includeInsufficientBalance
+          in: query
+          description: Should fill or kill orders that are not sufficiently funded be included?
+          schema:
+            type: boolean
+            default: false
+        - name: minValidTo
+          in: query
+          description: |
+            Minimum valid_to timestamp for included orders.
+            The default is the current time.
+          schema:
+            type: integer
+      responses:
+        200:
+          description: existing orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+  /api/v1/orders/{UID}:
+    get:
+      summary: Get existing order from UID.
+      parameters:
+        - in: path
+          name: UID
+          schema:
+            $ref: "#/components/schemas/UID"
+          required: true
+      responses:
+        200:
+          description: Order
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+        404:
+          description: Order was not found
+    delete:
+      summary: Cancels order by marking it invalid with a timestamp.
+      description: |
+        The successful deletion might not prevent solvers from settling the order
+        Authentication must be provided by signing the following message:
+      parameters:
+        - in: path
+          name: UID
+          schema:
+            $ref: "#/components/schemas/UID"
+          required: true
+      requestBody:
+        description: "Signed OrderCancellation"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderCancellation"
+      responses:
+        200:
+          description: Order deleted
+        401:
+          description: Invalid signature
+        404:
+          description: Order was not found
+  /api/v1/tokens/{sellToken}/fee:
+    get:
+      description: |
+        The fee that is charged for placing an order.
+        The fee is described by a minimum fee - in order to cover the gas costs for onchain settling - and
+        a feeRatio charged to the users for using the service.
+      parameters:
+        - name: sellToken
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/Address"
+      responses:
+        200:
+          description: the fee
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeeInformation"
+        404:
+          description: sellToken not existent
+  /api/v1/trades:
+    get:
+      summary: Get existing Trades.
+      description: |
+        By default all trades are returned.
+        Queries can be refined by specifiying owner or order_uid.
+      parameters:
+        - name: owner
+          in: query
+          schema:
+            $ref: "#/components/schemas/Address"
+          required: false
+        - name: orderUid
+          in: query
+          schema:
+            $ref: "#/components/schemas/UID"
+          required: false
+      responses:
+        200:
+          description: all trades
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Trade"
+  /api/v1/solvable_orders:
+    get:
+      summary: Get solvable orders.
+      description: |
+        The set of orders that solvers should be solving right now. These orders are determined to
+        be valid at the time of the request.
+      responses:
+        200:
+          description: the orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+components:
+  schemas:
+    Address:
+      description: Ethereum 40 byte address encoded as a hex with `0x` prefix.
+      type: string
+      example: "0x6810e776880c02933d47db1b9fc05908e5386b96"
+    BigUint:
+      description: A big unsigned integer encoded in decimal.
+      type: string
+      example: "1234567890"
+    TokenAmount:
+      description: Amount of a token. uint256 encoded in decimal.
+      type: string
+      example: "1234567890"
+    FeeInformation:
+      description: |
+        Provides the information to calculate the fees.
+      type: object
+      properties:
+        expirationDate:
+          description: |
+            Expiration date of the offered fee. Order service might not accept
+            the fee after this expiration date. Encoded as ISO 8601 UTC.
+          type: string
+          example: "2020-12-03T18:35:18.814523Z"
+        minimalFee:
+          description: Absolute amount of minimal fee charged per order in specified sellToken
+          $ref: "#/components/schemas/TokenAmount"
+        feeRatio:
+          description: The fee ratio charged on a sellAmount. Denoted in basis points
+          example: 10
+          type: number
+          format: int32
+    OrderType:
+      description: Is this a buy order or sell order?
+      type: string
+      enum: [buy, sell]
+    OrderCreation:
+      description: Data a user provides when creating a new order.
+      type: object
+      properties:
+        sellToken:
+          description: "ERC20 token to be sold"
+          $ref: "#/components/schemas/Address"
+        buyToken:
+          description: "ERC20 token to be bought"
+          $ref: "#/components/schemas/Address"
+        sellAmount:
+          description: "Amount of sellToken to be sold in atoms"
+          $ref: "#/components/schemas/TokenAmount"
+        buyAmount:
+          description: "Amount of buyToken to be bought in atoms"
+          $ref: "#/components/schemas/TokenAmount"
+        validTo:
+          description: Unix timestamp until the order is valid. uint32.
+          type: integer
+        appData:
+          description: |
+            Arbitrary identifier sent along with the order.
+            Could be used to track the interface or other meta-aspects of the order. uint32 encoded
+          type: integer
+        feeAmount:
+          description: "Fees: feeRatio * sellAmount + minimal_fee in atoms"
+          $ref: "#/components/schemas/TokenAmount"
+        kind:
+          description: "The kind is either a buy or sell order"
+          $ref: "#/components/schemas/OrderType"
+        partiallyFillable:
+          description: Is this a fill-or-kill order or a partially fillable order?
+          type: boolean
+        Signature:
+          $ref: "#/components/schemas/Signature"
+    OrderMetaData:
+      description: |
+        Extra order data that is returned to users when querying orders
+        but not provided by users when creating orders.
+      type: object
+      properties:
+        creationTime:
+          description: Creation time of the order. Encoded as ISO 8601 UTC.
+          type: string
+          example: "2020-12-03T18:35:18.814523Z"
+        owner:
+          $ref: "#/components/schemas/Address"
+        UID:
+          $ref: "#/components/schemas/UID"
+        availableBalance:
+          description: "Amount of sellToken available for the settlement contract to spend on behalf of the owner. Null if API was unable to fetch balance."
+          $ref: "#/components/schemas/TokenAmount"
+          nullable: true
+        executedSellAmount:
+          description: "The total amount of sellToken that has been executed for this order including fees."
+          $ref: "#/components/schemas/BigUint"
+        executedSellAmountBeforeFees:
+          description: "The total amount of sellToken that has been executed for this order without fees."
+          $ref: "#/components/schemas/BigUint"
+        executedBuyAmount:
+          description: "The total amount of buyToken that has been executed for this order."
+          $ref: "#/components/schemas/BigUint"
+        executedFeeAmount:
+          description: "The total amount of fees that have been executed for this order."
+          $ref: "#/components/schemas/BigUint"
+        invalidated:
+          description: Has this order been invalidated?
+          type: boolean
+    Order:
+      allOf:
+        - $ref: "#/components/schemas/OrderCreation"
+        - $ref: "#/components/schemas/OrderMetaData"
+    OrderCancellation:
+      description: |
+        EIP712 signature of struct OrderCancellation { orderUid: bytes } from the order's owner
+      type: object
+      properties:
+        signature:
+          description: "OrderCancellation signed by owner"
+          $ref: "#/components/schemas/Signature"
+    Trade:
+      description: |
+        Trade data such as executed amounts, fees, order id and block number.
+      type: object
+      properties:
+        blockNumber:
+          description: "Block in which trade occurred."
+          type: integer
+        logIndex:
+          description: "Index in which transaction was included in block."
+          type: integer
+        orderUid:
+          description: "Unique ID of the order matched by this trade."
+          $ref: "#/components/schemas/UID"
+        owner:
+          description: "Address of trader."
+          $ref: "#/components/schemas/Address"
+        sellToken:
+          description: "Address of token sold."
+          $ref: "#/components/schemas/Address"
+        buyToken:
+          description: "Address of token bought."
+          $ref: "#/components/schemas/Address"
+        sellAmount:
+          description: "Total amount of sellToken that has been executed for this trade (including fees)."
+          $ref: "#/components/schemas/TokenAmount"
+        sellAmountBeforeFees:
+          description: "The total amount of sellToken that has been executed for this order without fees."
+          $ref: "#/components/schemas/BigUint"
+        buyAmount:
+          description: "Total amount of buyToken received in this trade."
+          $ref: "#/components/schemas/TokenAmount"
+    UID:
+      description: |
+        Unique identifier for the order: 56 bytes encoded as hex with `0x` prefix.
+        Bytes 0 to 32 are the order digest, bytes 30 to 52 the owner address
+        and bytes 52..56 valid to,
+      type: string
+    Signature:
+      description: 65 bytes encoded as hex with `0x` prefix. r + s + v from the spec.
+      example: "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    OrderPostError:
+      type: object
+      properties:
+        errorType:
+          type: string
+          enum:
+            [
+              MissingOrderData,
+              InvalidSignature,
+              DuplicateOrder,
+              InsufficientFunds,
+            ]
+        description:
+          type: string
+    OrderCancellationError:
+      type: object
+      properties:
+        errorType:
+          type: string
+          enum:
+            [
+                InvalidSignature,
+                InvalidOrderUid,
+            ]
+        description:
+          type: string
