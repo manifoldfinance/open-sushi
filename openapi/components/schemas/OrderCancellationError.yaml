@@ -1,0 +1,9 @@
+type: object
+properties:
+  errorType:
+    type: string
+    enum:
+      - InvalidSignature
+      - InvalidOrderUid
+  description:
+    type: string

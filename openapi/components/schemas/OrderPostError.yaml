@@ -1,0 +1,11 @@
+type: object
+properties:
+  errorType:
+    type: string
+    enum:
+      - MissingOrderData
+      - InvalidSignature
+      - DuplicateOrder
+      - InsufficientFunds
+  description:
+    type: string

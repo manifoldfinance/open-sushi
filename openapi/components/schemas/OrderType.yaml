@@ -1,0 +1,5 @@
+description: Is this a buy order or sell order?
+type: string
+enum:
+  - buy
+  - sell

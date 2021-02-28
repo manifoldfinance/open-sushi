@@ -1,0 +1,36 @@
+description: Data a user provides when creating a new order.
+type: object
+properties:
+  sellToken:
+    description: ERC20 token to be sold
+    $ref: ./Address.yaml
+  buyToken:
+    description: ERC20 token to be bought
+    $ref: ./Address.yaml
+  sellAmount:
+    description: Amount of sellToken to be sold in atoms
+    $ref: ./TokenAmount.yaml
+  buyAmount:
+    description: Amount of buyToken to be bought in atoms
+    $ref: ./TokenAmount.yaml
+  validTo:
+    description: Unix timestamp until the order is valid. uint32.
+    type: integer
+  appData:
+    description: >
+      Arbitrary identifier sent along with the order.
+
+      Could be used to track the interface or other meta-aspects of the order.
+      uint32 encoded
+    type: integer
+  feeAmount:
+    description: 'Fees: feeRatio * sellAmount + minimal_fee in atoms'
+    $ref: ./TokenAmount.yaml
+  kind:
+    description: The kind is either a buy or sell order
+    $ref: ./OrderType.yaml
+  partiallyFillable:
+    description: Is this a fill-or-kill order or a partially fillable order?
+    type: boolean
+  Signature:
+    $ref: ./Signature.yaml

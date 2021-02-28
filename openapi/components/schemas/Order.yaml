@@ -1,0 +1,3 @@
+allOf:
+  - $ref: ./OrderCreation.yaml
+  - $ref: ./OrderMetaData.yaml

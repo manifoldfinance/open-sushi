@@ -1,0 +1,3 @@
+description: Amount of a token. uint256 encoded in decimal.
+type: string
+example: '1234567890'

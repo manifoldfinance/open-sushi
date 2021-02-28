@@ -1,0 +1,25 @@
+get:
+  summary: Get existing Trades.
+  description: |
+    By default all trades are returned.
+    Queries can be refined by specifiying owner or order_uid.
+  parameters:
+    - name: owner
+      in: query
+      schema:
+        $ref: ../components/schemas/Address.yaml
+      required: false
+    - name: orderUid
+      in: query
+      schema:
+        $ref: ../components/schemas/UID.yaml
+      required: false
+  responses:
+    '200':
+      description: all trades
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Trade.yaml

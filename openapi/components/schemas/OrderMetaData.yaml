@@ -1,0 +1,38 @@
+description: |
+  Extra order data that is returned to users when querying orders
+  but not provided by users when creating orders.
+type: object
+properties:
+  creationTime:
+    description: Creation time of the order. Encoded as ISO 8601 UTC.
+    type: string
+    example: '2020-12-03T18:35:18.814523Z'
+  owner:
+    $ref: ./Address.yaml
+  UID:
+    $ref: ./UID.yaml
+  availableBalance:
+    description: >-
+      Amount of sellToken available for the settlement contract to spend on
+      behalf of the owner. Null if API was unable to fetch balance.
+    $ref: ./TokenAmount.yaml
+    nullable: true
+  executedSellAmount:
+    description: >-
+      The total amount of sellToken that has been executed for this order
+      including fees.
+    $ref: ./BigUint.yaml
+  executedSellAmountBeforeFees:
+    description: >-
+      The total amount of sellToken that has been executed for this order
+      without fees.
+    $ref: ./BigUint.yaml
+  executedBuyAmount:
+    description: The total amount of buyToken that has been executed for this order.
+    $ref: ./BigUint.yaml
+  executedFeeAmount:
+    description: The total amount of fees that have been executed for this order.
+    $ref: ./BigUint.yaml
+  invalidated:
+    description: Has this order been invalidated?
+    type: boolean

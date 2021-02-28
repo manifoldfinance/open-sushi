@@ -1,0 +1,44 @@
+get:
+  summary: Get existing order from UID.
+  parameters:
+    - in: path
+      name: UID
+      schema:
+        $ref: ../components/schemas/UID.yaml
+      required: true
+  responses:
+    '200':
+      description: Order
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Order.yaml
+    '404':
+      description: Order was not found
+delete:
+  summary: Cancels order by marking it invalid with a timestamp.
+  description: |
+    The successful deletion might not prevent solvers from settling the order
+    Authentication must be provided by signing the following message:
+  parameters:
+    - in: path
+      name: UID
+      schema:
+        $ref: ../components/schemas/UID.yaml
+      required: true
+  requestBody:
+    description: Signed OrderCancellation
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/OrderCancellation.yaml
+  responses:
+    '200':
+      description: Order deleted
+    '401':
+      description: Invalid signature
+    '404':
+      description: Order was not found

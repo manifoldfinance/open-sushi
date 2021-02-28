@@ -1,0 +1,35 @@
+description: |
+  Trade data such as executed amounts, fees, order id and block number.
+type: object
+properties:
+  blockNumber:
+    description: Block in which trade occurred.
+    type: integer
+  logIndex:
+    description: Index in which transaction was included in block.
+    type: integer
+  orderUid:
+    description: Unique ID of the order matched by this trade.
+    $ref: ./UID.yaml
+  owner:
+    description: Address of trader.
+    $ref: ./Address.yaml
+  sellToken:
+    description: Address of token sold.
+    $ref: ./Address.yaml
+  buyToken:
+    description: Address of token bought.
+    $ref: ./Address.yaml
+  sellAmount:
+    description: >-
+      Total amount of sellToken that has been executed for this trade (including
+      fees).
+    $ref: ./TokenAmount.yaml
+  sellAmountBeforeFees:
+    description: >-
+      The total amount of sellToken that has been executed for this order
+      without fees.
+    $ref: ./BigUint.yaml
+  buyAmount:
+    description: Total amount of buyToken received in this trade.
+    $ref: ./TokenAmount.yaml

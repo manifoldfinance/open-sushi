@@ -1,0 +1,18 @@
+description: |
+  Provides the information to calculate the fees.
+type: object
+properties:
+  expirationDate:
+    description: |
+      Expiration date of the offered fee. Order service might not accept
+      the fee after this expiration date. Encoded as ISO 8601 UTC.
+    type: string
+    example: '2020-12-03T18:35:18.814523Z'
+  minimalFee:
+    description: Absolute amount of minimal fee charged per order in specified sellToken
+    $ref: ./TokenAmount.yaml
+  feeRatio:
+    description: The fee ratio charged on a sellAmount. Denoted in basis points
+    example: 10
+    type: number
+    format: int32

@@ -1,0 +1,8 @@
+description: >
+  EIP712 signature of struct OrderCancellation { orderUid: bytes } from the
+  order's owner
+type: object
+properties:
+  signature:
+    description: OrderCancellation signed by owner
+    $ref: ./Signature.yaml

@@ -1,0 +1,20 @@
+openapi: 3.0.3
+info:
+  version: 0.0.1
+  title: Order Book API
+servers:
+  - url: 'https://testing.backbonecabal.xyz'
+    description: SushiSwap Mainnet (Staging)
+  - url: 'http://localhost:8080'
+    description: Local
+paths:
+  /api/v1/orders:
+    $ref: paths/api@v1@orders.yaml
+  '/api/v1/orders/{UID}':
+    $ref: 'paths/api@v1@orders@{UID}.yaml'
+  '/api/v1/tokens/{sellToken}/fee':
+    $ref: 'paths/api@v1@tokens@{sellToken}@fee.yaml'
+  /api/v1/trades:
+    $ref: paths/api@v1@trades.yaml
+  /api/v1/solvable_orders:
+    $ref: paths/api@v1@solvable_orders.yaml
