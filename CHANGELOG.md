@@ -1,3 +1,16 @@
+# [0.2.0](https://github.com/manifoldfinance/open-sushi/compare/v0.1.4...v0.2.0) (2021-02-28)
+
+
+### Features
+
+* **import:** api ([a5ecacc](https://github.com/manifoldfinance/open-sushi/commit/a5ecaccbcf3edf6535ccca587a3d08831fc4a09c))
+* **swaps:** api ([18cf64a](https://github.com/manifoldfinance/open-sushi/commit/18cf64acb73d50da664407c2c17f36ddef94e0e0))
+
+
+### Miscellaneous
+
+* Merge branch 'master' of https://github.com/manifoldfinance/open-sushi ([3712cab](https://github.com/manifoldfinance/open-sushi/commit/3712cab0c2a832fa0a88385033fbdbce21a1a135))
+
 ## [0.1.4](https://github.com/manifoldfinance/open-sushi/compare/v0.1.3...v0.1.4) (2021-02-28)
 
 
