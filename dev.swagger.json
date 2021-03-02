@@ -1,0 +1,756 @@
+{
+  "info": {
+    "version": "0.0.1",
+    "title": "Order Book API"
+  },
+  "paths": {
+    "/basefee": {
+      "get": {
+        "tags": [
+          "Basefee API"
+        ],
+        "summary": "Retrieve the latest base fee",
+        "operationId": "getBaseFee",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetBasefeeResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ExceptionResponseBody"
+            }
+          }
+        },
+        "parameters": [],
+        "produces": [
+          "application/json",
+          "application/octet-stream"
+        ]
+      }
+    },
+    "/basefee/{block}": {
+      "get": {
+        "tags": [
+          "Basefee API"
+        ],
+        "summary": "Retrieve the base fee at given block",
+        "operationId": "getBaseFee_1",
+        "parameters": [
+          {
+            "name": "block",
+            "in": "path",
+            "description": "block number or one of earliest, latest, pending",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetBasefeeResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ExceptionResponseBody"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "application/octet-stream"
+        ]
+      }
+    },
+    "/tx/legacy/{privateKey}": {
+      "post": {
+        "tags": [
+          "Transaction API"
+        ],
+        "summary": "Submit a legacy Ethereum transaction",
+        "operationId": "submitTransaction",
+        "parameters": [
+          {
+            "name": "privateKey",
+            "in": "path",
+            "description": "private key to use to sign the transaction",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Transaction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SubmitTransactionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ExceptionResponseBody"
+            }
+          }
+        },
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/octet-stream"
+        ]
+      }
+    },
+    "/tx/eip1559/{privateKey}": {
+      "post": {
+        "tags": [
+          "Transaction API"
+        ],
+        "summary": "Submit an EIP-1559 Ethereum transaction",
+        "operationId": "submitTransaction_1",
+        "parameters": [
+          {
+            "name": "privateKey",
+            "in": "path",
+            "description": "private key to use to sign the transaction",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/EIP1559Transaction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SubmitTransactionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ExceptionResponseBody"
+            }
+          }
+        },
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/octet-stream"
+        ]
+      }
+    },
+    "/api/v1/orders": {
+      "post": {
+        "summary": "Create a new order.",
+        "responses": {
+          "201": {
+            "description": "Order has been accepted.",
+            "schema": {
+              "$ref": "#/definitions/UID"
+            }
+          },
+          "400": {
+            "description": "Error during order validation",
+            "schema": {
+              "$ref": "#/definitions/OrderPostError"
+            }
+          },
+          "403": {
+            "description": "Forbidden, your account is deny-listed"
+          },
+          "429": {
+            "description": "Too many order placements"
+          },
+          "500": {
+            "description": "Error adding an order"
+          }
+        },
+        "parameters": [
+          {
+            "description": "The order to create.",
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/OrderCreation"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      },
+      "get": {
+        "summary": "Get existing orders.",
+        "description": "By default all currently valid orders are returned. The set of returned orders can be\nreduced by setting owner, sell token, buy token filters. It can be increased by disabling\ndifferent order validity exclusion criteria.\n",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Ethereum 40 byte address encoded as a hex with `0x` prefix."
+          },
+          {
+            "name": "sellToken",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Ethereum 40 byte address encoded as a hex with `0x` prefix."
+          },
+          {
+            "name": "buyToken",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Ethereum 40 byte address encoded as a hex with `0x` prefix."
+          },
+          {
+            "name": "includeFullyExecuted",
+            "in": "query",
+            "description": "Should fully executed orders be returned?",
+            "default": false,
+            "type": "boolean"
+          },
+          {
+            "name": "includeInvalidated",
+            "in": "query",
+            "description": "Should orders that have been invalidated in the smart contract be returned?",
+            "default": false,
+            "type": "boolean"
+          },
+          {
+            "name": "includeInsufficientBalance",
+            "in": "query",
+            "description": "Should fill or kill orders that are not sufficiently funded be included?",
+            "default": false,
+            "type": "boolean"
+          },
+          {
+            "name": "minValidTo",
+            "in": "query",
+            "description": "Minimum valid_to timestamp for included orders.\nThe default is the current time.\n",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "existing orders",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Order"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/api/v1/orders/{UID}": {
+      "get": {
+        "summary": "Get existing order from UID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "UID",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier for the order: 56 bytes encoded as hex with `0x` prefix.\nBytes 0 to 32 are the order digest, bytes 30 to 52 the owner address\nand bytes 52..56 valid to,\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Order"
+              }
+            }
+          },
+          "404": {
+            "description": "Order was not found"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      },
+      "delete": {
+        "summary": "Cancels order by marking it invalid with a timestamp.",
+        "description": "The successful deletion might not prevent solvers from settling the order\nAuthentication must be provided by signing the following message:\n",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "UID",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier for the order: 56 bytes encoded as hex with `0x` prefix.\nBytes 0 to 32 are the order digest, bytes 30 to 52 the owner address\nand bytes 52..56 valid to,\n"
+          },
+          {
+            "description": "Signed OrderCancellation",
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/OrderCancellation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order deleted"
+          },
+          "401": {
+            "description": "Invalid signature"
+          },
+          "404": {
+            "description": "Order was not found"
+          }
+        },
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/api/v1/tokens/{sellToken}/fee": {
+      "get": {
+        "description": "The fee that is charged for placing an order.\nThe fee is described by a minimum fee - in order to cover the gas costs for onchain settling - and\na feeRatio charged to the users for using the service.\n",
+        "parameters": [
+          {
+            "name": "sellToken",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Ethereum 40 byte address encoded as a hex with `0x` prefix."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the fee",
+            "schema": {
+              "$ref": "#/definitions/FeeInformation"
+            }
+          },
+          "404": {
+            "description": "sellToken not existent"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/api/v1/trades": {
+      "get": {
+        "summary": "Get existing Trades.",
+        "description": "By default all trades are returned.\nQueries can be refined by specifiying owner or order_uid.\n",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Ethereum 40 byte address encoded as a hex with `0x` prefix."
+          },
+          {
+            "name": "orderUid",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Unique identifier for the order: 56 bytes encoded as hex with `0x` prefix.\nBytes 0 to 32 are the order digest, bytes 30 to 52 the owner address\nand bytes 52..56 valid to,\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "all trades",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Trade"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/api/v1/solvable_orders": {
+      "get": {
+        "summary": "Get solvable orders.",
+        "description": "The set of orders that solvers should be solving right now. These orders are determined to\nbe valid at the time of the request.\n",
+        "responses": {
+          "200": {
+            "description": "the orders",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Order"
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0",
+  "host": "sushi.backbonecabal.xyz",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "basePath": "/",
+  "definitions": {
+    "EIP1559Transaction": {
+        "required": [
+      "feecap",
+      "gasLimit",
+      "minerBribe",
+      "to",
+      "value"
+    ],
+    "type": "object",
+    "properties": {
+      "nonce": {
+        "type": "integer"
+      },
+      "to": {
+        "maxLength": 42,
+        "minLength": 42,
+        "type": "string",
+        "description": "the recipient address",
+        "example": "0x61aCB88dA0DBA1A43592f7cc548b3319Fa615e1b"
+      },
+      "value": {
+        "type": "integer",
+        "description": "the amount of ETH to send, in WEI",
+        "example": 1000000
+      },
+      "gasPrice": {
+        "type": "integer",
+        "description": "the gas price of the transaction, in WEI",
+        "example": 1000
+      },
+      "gasLimit": {
+        "type": "integer",
+        "description": "the gas limit of the transaction",
+        "example": 21000
+      },
+      "minerBribe": {
+        "type": "integer",
+        "description": "the miner bribe, in WEI",
+        "example": 1000
+      },
+      "feecap": {
+        "type": "integer",
+        "description": "the maximum of ETH the user is willing to pay for the transaction, in WEI",
+        "example": 1000000000
+      },
+    },
+    "Address": {
+      "description": "Ethereum 40 byte address encoded as a hex with `0x` prefix.",
+      "type": "string",
+      "example": "0x6810e776880c02933d47db1b9fc05908e5386b96"
+    },
+    "BigUint": {
+      "description": "A big unsigned integer encoded in decimal.",
+      "type": "string",
+      "example": "1234567890"
+    },
+    "TokenAmount": {
+      "description": "Amount of a token. uint256 encoded in decimal.",
+      "type": "string",
+      "example": "1234567890"
+    },
+    "FeeInformation": {
+      "description": "Provides the information to calculate the fees.\n",
+      "type": "object",
+      "properties": {
+        "expirationDate": {
+          "description": "Expiration date of the offered fee. Order service might not accept\nthe fee after this expiration date. Encoded as ISO 8601 UTC.\n",
+          "type": "string",
+          "example": "2020-12-03T18:35:18.814523Z"
+        },
+        "minimalFee": {
+          "description": "Absolute amount of minimal fee charged per order in specified sellToken",
+          "$ref": "#/definitions/TokenAmount"
+        },
+        "feeRatio": {
+          "description": "The fee ratio charged on a sellAmount. Denoted in basis points",
+          "example": 10,
+          "type": "number",
+          "format": "int32"
+        }
+      }
+    },
+    "OrderType": {
+      "description": "Is this a buy order or sell order?",
+      "type": "string",
+      "enum": [
+        "buy",
+        "sell"
+      ]
+    },
+    "OrderCreation": {
+      "description": "Data a user provides when creating a new order.",
+      "type": "object",
+      "properties": {
+        "sellToken": {
+          "description": "ERC20 token to be sold",
+          "$ref": "#/definitions/Address"
+        },
+        "buyToken": {
+          "description": "ERC20 token to be bought",
+          "$ref": "#/definitions/Address"
+        },
+        "sellAmount": {
+          "description": "Amount of sellToken to be sold in atoms",
+          "$ref": "#/definitions/TokenAmount"
+        },
+        "buyAmount": {
+          "description": "Amount of buyToken to be bought in atoms",
+          "$ref": "#/definitions/TokenAmount"
+        },
+        "validTo": {
+          "description": "Unix timestamp until the order is valid. uint32.",
+          "type": "integer"
+        },
+        "appData": {
+          "description": "Arbitrary identifier sent along with the order.\nCould be used to track the interface or other meta-aspects of the order. uint32 encoded\n",
+          "type": "integer"
+        },
+        "feeAmount": {
+          "description": "Fees: feeRatio * sellAmount + minimal_fee in atoms",
+          "$ref": "#/definitions/TokenAmount"
+        },
+        "kind": {
+          "description": "The kind is either a buy or sell order",
+          "$ref": "#/definitions/OrderType"
+        },
+        "partiallyFillable": {
+          "description": "Is this a fill-or-kill order or a partially fillable order?",
+          "type": "boolean"
+        },
+        "Signature": {
+          "$ref": "#/definitions/Signature"
+        }
+      }
+    },
+    "OrderMetaData": {
+      "description": "Extra order data that is returned to users when querying orders\nbut not provided by users when creating orders.\n",
+      "type": "object",
+      "properties": {
+        "creationTime": {
+          "description": "Creation time of the order. Encoded as ISO 8601 UTC.",
+          "type": "string",
+          "example": "2020-12-03T18:35:18.814523Z"
+        },
+        "owner": {
+          "$ref": "#/definitions/Address"
+        },
+        "UID": {
+          "$ref": "#/definitions/UID"
+        },
+        "availableBalance": {
+          "description": "Amount of sellToken available for the settlement contract to spend on behalf of the owner. Null if API was unable to fetch balance.",
+          "$ref": "#/definitions/TokenAmount",
+          "x-nullable": true
+        },
+        "executedSellAmount": {
+          "description": "The total amount of sellToken that has been executed for this order including fees.",
+          "$ref": "#/definitions/BigUint"
+        },
+        "executedSellAmountBeforeFees": {
+          "description": "The total amount of sellToken that has been executed for this order without fees.",
+          "$ref": "#/definitions/BigUint"
+        },
+        "executedBuyAmount": {
+          "description": "The total amount of buyToken that has been executed for this order.",
+          "$ref": "#/definitions/BigUint"
+        },
+        "executedFeeAmount": {
+          "description": "The total amount of fees that have been executed for this order.",
+          "$ref": "#/definitions/BigUint"
+        },
+        "invalidated": {
+          "description": "Has this order been invalidated?",
+          "type": "boolean"
+        }
+      }
+    },
+    "Order": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/OrderCreation"
+        },
+        {
+          "$ref": "#/definitions/OrderMetaData"
+        }
+      ]
+    },
+    "OrderCancellation": {
+      "description": "EIP712 signature of struct OrderCancellation { orderUid: bytes } from the order's owner\n",
+      "type": "object",
+      "properties": {
+        "signature": {
+          "description": "OrderCancellation signed by owner",
+          "$ref": "#/definitions/Signature"
+        }
+      }
+    },
+    "Trade": {
+      "description": "Trade data such as executed amounts, fees, order id and block number.\n",
+      "type": "object",
+      "properties": {
+        "blockNumber": {
+          "description": "Block in which trade occurred.",
+          "type": "integer"
+        },
+        "logIndex": {
+          "description": "Index in which transaction was included in block.",
+          "type": "integer"
+        },
+        "orderUid": {
+          "description": "Unique ID of the order matched by this trade.",
+          "$ref": "#/definitions/UID"
+        },
+        "owner": {
+          "description": "Address of trader.",
+          "$ref": "#/definitions/Address"
+        },
+        "sellToken": {
+          "description": "Address of token sold.",
+          "$ref": "#/definitions/Address"
+        },
+        "buyToken": {
+          "description": "Address of token bought.",
+          "$ref": "#/definitions/Address"
+        },
+        "sellAmount": {
+          "description": "Total amount of sellToken that has been executed for this trade (including fees).",
+          "$ref": "#/definitions/TokenAmount"
+        },
+        "sellAmountBeforeFees": {
+          "description": "The total amount of sellToken that has been executed for this order without fees.",
+          "$ref": "#/definitions/BigUint"
+        },
+        "buyAmount": {
+          "description": "Total amount of buyToken received in this trade.",
+          "$ref": "#/definitions/TokenAmount"
+        }
+      }
+    },
+    "UID": {
+      "description": "Unique identifier for the order: 56 bytes encoded as hex with `0x` prefix.\nBytes 0 to 32 are the order digest, bytes 30 to 52 the owner address\nand bytes 52..56 valid to,\n",
+      "type": "string"
+    },
+    "Signature": {
+      "description": "65 bytes encoded as hex with `0x` prefix. r + s + v from the spec.",
+      "example": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "OrderPostError": {
+      "type": "object",
+      "properties": {
+        "errorType": {
+          "type": "string",
+          "enum": [
+            "MissingOrderData",
+            "InvalidSignature",
+            "DuplicateOrder",
+            "InsufficientFunds"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "OrderCancellationError": {
+      "type": "object",
+      "properties": {
+        "errorType": {
+          "type": "string",
+          "enum": [
+            "InvalidSignature",
+            "InvalidOrderUid"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "x-components": {}
+}

@@ -1,0 +1,115 @@
+{
+    "ExceptionResponseBody": {
+    "type": "object",
+    "properties": {
+      "errorCode": {
+        "type": "integer",
+        "format": "int32"
+      },
+      "errorLabel": {
+        "type": "string"
+      },
+      "errorMessage": {
+        "type": "string"
+      }
+    }
+  },
+  "GetBasefeeResponse": {
+    "type": "object",
+    "properties": {
+      "baseFee": {
+        "type": "string"
+      }
+    }
+  },
+  "Transaction": {
+    "required": [
+      "gasLimit",
+      "to",
+      "value"
+    ],
+    "type": "object",
+    "properties": {
+      "nonce": {
+        "type": "integer"
+      },
+      "to": {
+        "maxLength": 42,
+        "minLength": 42,
+        "type": "string",
+        "description": "the recipient address",
+        "example": "0x61aCB88dA0DBA1A43592f7cc548b3319Fa615e1b"
+      },
+      "value": {
+        "type": "integer",
+        "description": "the amount of ETH to send, in WEI",
+        "example": 1000000
+      },
+      "gasPrice": {
+        "type": "integer",
+        "description": "the gas price of the transaction, in WEI",
+        "example": 1000
+      },
+      "gasLimit": {
+        "type": "integer",
+        "description": "the gas limit of the transaction",
+        "example": 21000
+      }
+    }
+  },
+  "SubmitTransactionResponse": {
+    "type": "object",
+    "properties": {
+      "transactionHash": {
+        "type": "string"
+      }
+    }
+  },
+  "EIP1559Transaction": {
+    "required": [
+      "feecap",
+      "gasLimit",
+      "minerBribe",
+      "to",
+      "value"
+    ],
+    "type": "object",
+    "properties": {
+      "nonce": {
+        "type": "integer"
+      },
+      "to": {
+        "maxLength": 42,
+        "minLength": 42,
+        "type": "string",
+        "description": "the recipient address",
+        "example": "0x61aCB88dA0DBA1A43592f7cc548b3319Fa615e1b"
+      },
+      "value": {
+        "type": "integer",
+        "description": "the amount of ETH to send, in WEI",
+        "example": 1000000
+      },
+      "gasPrice": {
+        "type": "integer",
+        "description": "the gas price of the transaction, in WEI",
+        "example": 1000
+      },
+      "gasLimit": {
+        "type": "integer",
+        "description": "the gas limit of the transaction",
+        "example": 21000
+      },
+      "minerBribe": {
+        "type": "integer",
+        "description": "the miner bribe, in WEI",
+        "example": 1000
+      },
+      "feecap": {
+        "type": "integer",
+        "description": "the maximum of ETH the user is willing to pay for the transaction, in WEI",
+        "example": 1000000000
+      }
+    }
+  }
+}
