@@ -1,3 +1,15 @@
+## [0.2.3](https://github.com/manifoldfinance/open-sushi/compare/v0.2.2...v0.2.3) (2021-03-08)
+
+
+### Documentation
+
+* **markdown:** generate docs ([f4dd14b](https://github.com/manifoldfinance/open-sushi/commit/f4dd14b2cbabb811b5adc971717a8c86f4d3e0b4))
+
+
+### Miscellaneous
+
+* Merge branch 'master' of https://github.com/manifoldfinance/open-sushi ([030852f](https://github.com/manifoldfinance/open-sushi/commit/030852f24102722f6dec80ffa2e859cf34c0b3e4))
+
 ## [0.2.2](https://github.com/manifoldfinance/open-sushi/compare/v0.2.1...v0.2.2) (2021-03-08)
 
 
