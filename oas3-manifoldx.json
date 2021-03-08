@@ -1,16 +1,16 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "ConsenSys Codefi Orchestrate REST API",
-        "version": "latest-c51be25b",
+        "title": "CommodityStream ManifoldX REST API",
+        "version": "v0.1.5",
         "contact": {
-            "name": "ConsenSys Codefi Orchestrate",
-            "email": "orchestrate@consensys.net"
+            "name": "CommodityStream ManifoldX",
+            "email": "manifoldx@manifoldfinance.com"
         }
     },
     "externalDocs": {
-        "description": "Documentation of ConsenSys Codefi Orchestrate",
-        "url": "https://docs.orchestrate.consensys.net/"
+        "description": "Documentation of ManifoldX API",
+        "url": "https://docs.manifoldx.manifoldfinance.com/"
     },
     "paths": {
         "/accounts": {
@@ -151,7 +151,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             },
             "post": {
@@ -300,7 +300,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -498,7 +498,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -595,7 +595,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -830,7 +830,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -965,7 +965,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             },
             "patch": {
@@ -1141,7 +1141,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -1281,7 +1281,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -1552,7 +1552,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -1727,7 +1727,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             },
             "post": {
@@ -2012,7 +2012,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -2215,7 +2215,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             },
             "delete": {
@@ -2305,7 +2305,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             },
             "patch": {
@@ -2608,7 +2608,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -2660,7 +2660,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             },
             "post": {
@@ -2672,7 +2672,7 @@
                         "JWTAuth": []
                     }
                 ],
-                "description": "Register new solidity contract in Orchestrate",
+                "description": "Register new solidity contract in ManifoldX",
                 "summary": "Register new solidity contract",
                 "requestBody": {
                     "content": {
@@ -2783,7 +2783,7 @@
                                                 },
                                                 "registry": {
                                                     "type": "string",
-                                                    "example": "registry.consensys.net/orchestrate"
+                                                    "example": "registry.manifoldfinance.com/manifoldx"
                                                 },
                                                 "tag": {
                                                     "type": "string",
@@ -2908,7 +2908,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -3000,7 +3000,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -3136,7 +3136,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -3208,7 +3208,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -3317,7 +3317,7 @@
                                                 },
                                                 "registry": {
                                                     "type": "string",
-                                                    "example": "registry.consensys.net/orchestrate"
+                                                    "example": "registry.manifoldfinance.com/manifoldx"
                                                 },
                                                 "tag": {
                                                     "type": "string",
@@ -3422,7 +3422,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -3514,7 +3514,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -3633,7 +3633,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             },
             "post": {
@@ -3812,7 +3812,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -3931,7 +3931,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             },
             "delete": {
@@ -4021,7 +4021,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             },
             "patch": {
@@ -4223,7 +4223,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -4694,7 +4694,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             },
             "post": {
@@ -5293,7 +5293,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -5659,7 +5659,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             },
             "patch": {
@@ -5671,7 +5671,7 @@
                         "JWTAuth": []
                     }
                 ],
-                "description": "Update a specific job by UUID\nWARNING: Reserved for advanced users. Orchestrate does not recommend using this endpoint.",
+                "description": "Update a specific job by UUID\nWARNING: Reserved for advanced users. ManifoldX does not recommend using this endpoint.",
                 "summary": "Update job by UUID",
                 "requestBody": {
                     "content": {
@@ -6260,7 +6260,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -6333,7 +6333,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -6406,7 +6406,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -6655,7 +6655,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             },
             "post": {
@@ -7142,7 +7142,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -7419,7 +7419,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -7780,7 +7780,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -8440,7 +8440,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -9102,7 +9102,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -9581,7 +9581,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -10173,7 +10173,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
@@ -10527,7 +10527,7 @@
                     }
                 },
                 "tags": [
-                    "Orchestrate API"
+                    "ManifoldX API"
                 ]
             }
         },
