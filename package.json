@@ -1,6 +1,7 @@
 {
   "name": "sushiswap-restful-api",
-  "version": "0.2.2",
+  "version": "0.2.3",
+  "dependencies": {},
   "private": true,
   "scripts": {
     "start": "openapi preview-docs",
@@ -20,8 +21,5 @@
     "pactum-swagger-coverage": "^1.0.0",
     "semantic-release": "^17.4.0",
     "semantic-release-npm-github-publish": "^1.4.0"
-  },
-  "msw": {
-    "workerDirectory": "mock-e2e"
   }
 }
