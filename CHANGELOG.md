@@ -1,3 +1,15 @@
+## [0.2.2](https://github.com/manifoldfinance/open-sushi/compare/v0.2.1...v0.2.2) (2021-03-08)
+
+
+### Code Refactoring
+
+* **api:** integration and format update ([c1e199b](https://github.com/manifoldfinance/open-sushi/commit/c1e199b3ea19ca0f0b7feb71bbca2dfc17335b9e))
+
+
+### Miscellaneous
+
+* v0.1.5 ([460b82f](https://github.com/manifoldfinance/open-sushi/commit/460b82f340eb73bb9b8980eceb28ee0cf1b99717))
+
 ## [0.2.1](https://github.com/manifoldfinance/open-sushi/compare/v0.2.0...v0.2.1) (2021-03-08)
 
 
