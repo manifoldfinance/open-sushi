@@ -1,14 +1,15 @@
 {
   "name": "sushiswap-restful-api",
   "version": "0.2.2",
-  "dependencies": {},
   "private": true,
   "scripts": {
     "start": "openapi preview-docs",
     "build": "openapi bundle -o dist",
-    "test": "openapi lint"
+    "test": "openapi lint",
+    "build:docs": "npx openapi-generator generate -i source/sushiswap_endpoint.api.json --generator-name markdown -o docs/"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.1.26",
     "@redocly/openapi-cli": "^1.0.0-beta.32",
     "@semantic-release/exec": "^5.0.0",
     "@semantic-release/github": "^7.2.0",
