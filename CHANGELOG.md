@@ -1,3 +1,16 @@
+## [0.2.1](https://github.com/manifoldfinance/open-sushi/compare/v0.2.0...v0.2.1) (2021-03-08)
+
+
+### Continuous Integration
+
+* **workflows:** refactor ([fcf726d](https://github.com/manifoldfinance/open-sushi/commit/fcf726dc75548e0e3203e2551a5664d3cf01a748))
+
+
+### Miscellaneous
+
+* Merge branch 'master' of https://github.com/manifoldfinance/open-sushi ([705d8f7](https://github.com/manifoldfinance/open-sushi/commit/705d8f721e2114bb4710c737ede04c9b6a41d985))
+* update ([0f048dc](https://github.com/manifoldfinance/open-sushi/commit/0f048dc05e14ded193b405f41a844446b798531b))
+
 # [0.2.0](https://github.com/manifoldfinance/open-sushi/compare/v0.1.4...v0.2.0) (2021-02-28)
 
 
