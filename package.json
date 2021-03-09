@@ -1,0 +1,8 @@
+{
+  "name": "open-sushi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/manifoldfinance/open-sushi",
+  "author": "sam <sam@freighttrust.com>",
+  "license": "MIT"
+}
